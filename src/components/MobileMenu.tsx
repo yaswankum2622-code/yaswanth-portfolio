@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Menu, MoveRight } from "lucide-react";
 
@@ -23,6 +23,22 @@ type MobileMenuProps = {
 
 export function MobileMenu({ links, resumeHref }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
+  const [pendingHref, setPendingHref] = useState<`#${string}` | null>(null);
+
+  useEffect(() => {
+    if (open || !pendingHref) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      scrollToPortfolioSection(pendingHref);
+      setPendingHref(null);
+    }, 240);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [open, pendingHref]);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -58,10 +74,8 @@ export function MobileMenu({ links, resumeHref }: MobileMenuProps) {
                 data-slash-trigger="light"
                 onClick={(event) => {
                   event.preventDefault();
+                  setPendingHref(link.href);
                   setOpen(false);
-                  window.setTimeout(() => {
-                    scrollToPortfolioSection(link.href);
-                  }, 40);
                 }}
                 className="group flex items-center justify-between border border-white/8 bg-white/[0.03] px-4 py-3 text-sm tracking-[0.14em] text-white/82 uppercase transition hover:border-[rgba(249,115,22,0.3)] hover:bg-white/[0.06]"
               >
