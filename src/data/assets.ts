@@ -30,6 +30,8 @@ export const assets = {
   cortexAgent: "/assets/cortexagent.jpg",
   bankingOS: "/assets/banking-os.jpg",
   bankingOSUpscaled: "/assets/banking-os-4k.png",
+  bankingOSForge: "/assets/banking-os-forge.png",
+  phoneCard: "/assets/phone-card.png",
 } as const;
 
 export type AssetKey = keyof typeof assets;

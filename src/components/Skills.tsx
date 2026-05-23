@@ -48,7 +48,7 @@ export function Skills({ chapter }: SkillsProps) {
       mood={chapter.mood}
       accent={chapter.accent}
       backgroundType="forge-fire"
-      image={assets.skillsForge}
+      image={assets.slash}
       imagePosition="center"
     >
       <div className="relative space-y-6">

@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "motion/react";
 
 import { AnimatedTextReveal } from "@/components/AnimatedTextReveal";
-import { SafeImage } from "@/components/SafeImage";
 import { StorySection } from "@/components/StorySection";
 import { assets } from "@/data/assets";
 import { education } from "@/data/experience";
@@ -31,6 +30,12 @@ const educationPillars = [
   },
 ];
 
+const studyTrail = [
+  "Machine Learning and NLP",
+  "Algorithms, Data Systems, and Software Foundations",
+  "Statistics, Business Analytics, and Applied Decision-Making",
+];
+
 export function Education({ chapter }: EducationProps) {
   const prefersReducedMotion = useReducedMotion();
 
@@ -46,7 +51,7 @@ export function Education({ chapter }: EducationProps) {
       image={assets.scholarPath}
       imagePosition="center"
     >
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1.04fr)_minmax(18rem,25rem)] lg:items-stretch">
+      <div className="grid gap-8 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] xl:items-start">
         <motion.div
           className="space-y-6"
           initial={prefersReducedMotion ? false : { opacity: 0, x: -28 }}
@@ -111,29 +116,62 @@ export function Education({ chapter }: EducationProps) {
         </motion.div>
 
         <motion.div
-          className="relative overflow-hidden border border-[rgba(245,158,11,0.2)] bg-black/30 shadow-[0_24px_70px_rgba(0,0,0,0.24)]"
-          initial={prefersReducedMotion ? false : { opacity: 0, x: 30, scale: 0.985 }}
-          whileInView={prefersReducedMotion ? undefined : { opacity: 1, x: 0, scale: 1 }}
+          className="relative border border-[rgba(245,158,11,0.16)] bg-[linear-gradient(180deg,rgba(10,9,8,0.72)_0%,rgba(8,8,7,0.9)_100%)] p-6 shadow-[0_24px_70px_rgba(0,0,0,0.24)]"
+          initial={prefersReducedMotion ? false : { opacity: 0, x: 24 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.22 }}
           transition={{ duration: 0.84, delay: prefersReducedMotion ? 0 : 0.08, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="relative aspect-[4/5] lg:h-full lg:aspect-auto">
-            <SafeImage
-              src={assets.scholarPath}
-              alt="Education chapter atmosphere"
-              fill
-              quality={96}
-              sizes="(min-width: 1024px) 25rem, 100vw"
-              className="object-cover object-center"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.76)_100%)]" />
-            <div className="absolute inset-x-0 bottom-0 border-t border-white/10 bg-black/46 px-5 py-5">
-              <p className="text-[0.68rem] tracking-[0.18em] text-[var(--gold)] uppercase">
-                Foundation of study
+          <div className="space-y-5">
+            <div>
+              <p className="text-[0.7rem] tracking-[0.18em] text-[var(--gold)] uppercase">
+                Study trail
               </p>
-              <p className="mt-2 text-sm leading-7 text-white/76">
-                A long-form academic chapter that built technical depth, analytical patience, and disciplined execution.
+              <p className="mt-2 text-sm leading-7 text-white/70">
+                Instead of a separate photo block, this chapter maps the academic path that shaped the engineering discipline behind the portfolio.
               </p>
+            </div>
+
+            <div className="relative pl-6">
+              <div className="absolute left-2 top-2 bottom-2 w-px bg-[linear-gradient(180deg,rgba(245,158,11,0.7)_0%,rgba(245,158,11,0.16)_100%)]" />
+              <div className="space-y-4">
+                {studyTrail.map((item, index) => (
+                  <motion.div
+                    key={item}
+                    className="relative border border-[rgba(245,158,11,0.12)] bg-black/24 px-4 py-4"
+                    initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+                    whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.16 }}
+                    transition={{
+                      duration: 0.42,
+                      delay: prefersReducedMotion ? 0 : 0.12 + index * 0.05,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                  >
+                    <span className="absolute -left-[1.45rem] top-5 h-3 w-3 rounded-full border border-[rgba(245,158,11,0.28)] bg-[var(--gold)] shadow-[0_0_12px_rgba(245,158,11,0.4)]" />
+                    <p className="text-sm leading-7 text-white/78">{item}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="border border-[rgba(245,158,11,0.12)] bg-black/22 px-4 py-4">
+                <p className="text-[0.68rem] tracking-[0.18em] text-[var(--gold)] uppercase">
+                  Core outcome
+                </p>
+                <p className="mt-2 text-sm leading-7 text-white/72">
+                  Technical depth paired with analytical patience and practical systems thinking.
+                </p>
+              </div>
+              <div className="border border-[rgba(245,158,11,0.12)] bg-black/22 px-4 py-4">
+                <p className="text-[0.68rem] tracking-[0.18em] text-[var(--gold)] uppercase">
+                  Portfolio impact
+                </p>
+                <p className="mt-2 text-sm leading-7 text-white/72">
+                  The academic base now shows up as cleaner architecture, better evaluation discipline, and clearer product reasoning.
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>

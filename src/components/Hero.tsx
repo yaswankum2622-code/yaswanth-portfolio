@@ -1,7 +1,5 @@
 "use client";
 
-import { useRef } from "react";
-
 import {
   ArrowDown,
   ArrowRight,
@@ -11,21 +9,10 @@ import {
   Mail,
   Network,
 } from "lucide-react";
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 import { GlowDivider } from "@/components/GlowDivider";
-import { useAnimationProvider } from "@/components/AnimationProvider";
-import { SafeImage } from "@/components/SafeImage";
-import { StorySection } from "@/components/StorySection";
 import { buttonVariants } from "@/components/ui/button";
-import { assets } from "@/data/assets";
 import { profile } from "@/data/profile";
 import type { StoryChapter } from "@/data/storyChapters";
 import { cn } from "@/lib/utils";
@@ -86,78 +73,27 @@ const socialButtons = [
 
 export function Hero({ chapter, resumeHref }: HeroProps) {
   const prefersReducedMotion = useReducedMotion();
-  const { canUseCustomCursor } = useAnimationProvider();
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  const heroImageY = useTransform(scrollYProgress, [0, 1], [0, 90]);
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-  const smoothX = useSpring(pointerX, { stiffness: 70, damping: 20, mass: 0.45 });
-  const smoothY = useSpring(pointerY, { stiffness: 70, damping: 20, mass: 0.45 });
-  const allowPointerParallax = canUseCustomCursor && !prefersReducedMotion;
 
   return (
-    <StorySection
+    <section
       id="hero"
-      chapterNumber={1}
-      title={chapter.title}
-      eyebrow={chapter.eyebrow}
-      mood={chapter.mood}
-      accent={chapter.accent}
-      backgroundType="cherry-dawn"
-      className="min-h-screen"
-      hideHeader
+      className="relative isolate min-h-screen overflow-hidden scroll-mt-24"
     >
       <div
-        ref={sectionRef}
-        className="relative isolate"
-        onPointerMove={
-          allowPointerParallax ?
-            (event) => {
-              const bounds = event.currentTarget.getBoundingClientRect();
-              const nextX = ((event.clientX - bounds.left) / bounds.width - 0.5) * 26;
-              const nextY = ((event.clientY - bounds.top) / bounds.height - 0.5) * 18;
-              pointerX.set(nextX);
-              pointerY.set(nextY);
-            }
-          : undefined
-        }
-        onPointerLeave={
-          allowPointerParallax ?
-            () => {
-              pointerX.set(0);
-              pointerY.set(0);
-            }
-          : undefined
-        }
-      >
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-          style={prefersReducedMotion ? undefined : { y: heroImageY }}
-        >
-          <motion.div
-            className="absolute inset-0"
-            style={allowPointerParallax ? { x: smoothX, y: smoothY } : undefined}
-          >
-            <SafeImage
-              src={assets.cherryBlossomDawn}
-              alt="Hero background atmosphere"
-              fill
-              priority
-              quality={96}
-              sizes="100vw"
-              className="object-cover object-center opacity-[0.9]"
-            />
-          </motion.div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_78%,rgba(249,115,22,0.38),transparent_26%),radial-gradient(circle_at_74%_14%,rgba(251,191,36,0.12),transparent_22%),linear-gradient(90deg,rgba(5,5,5,0.92)_0%,rgba(10,7,6,0.6)_42%,rgba(6,6,6,0.72)_100%),linear-gradient(180deg,rgba(10,6,5,0.22)_0%,rgba(8,7,7,0.42)_58%,rgba(4,4,4,0.8)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(115deg,rgba(0,0,0,0.44)_0%,rgba(0,0,0,0.08)_42%,rgba(0,0,0,0.54)_100%)]" />
-        </motion.div>
+        aria-hidden
+        className="absolute inset-0 bg-[radial-gradient(circle_at_28%_80%,rgba(249,115,22,0.28),transparent_28%),radial-gradient(circle_at_70%_20%,rgba(251,191,36,0.12),transparent_22%),linear-gradient(90deg,rgba(6,6,6,0.5)_0%,rgba(6,6,6,0.22)_36%,rgba(6,6,6,0.38)_100%),linear-gradient(180deg,rgba(8,5,4,0.22)_0%,rgba(7,6,6,0.44)_58%,rgba(5,5,5,0.82)_100%)]"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[url('/assets/ch1-sakura.jpg')] bg-cover bg-center opacity-[0.96]"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[radial-gradient(circle_at_30%_26%,rgba(255,255,255,0.06),transparent_20%),linear-gradient(90deg,rgba(6,6,6,0.64)_0%,rgba(6,6,6,0.26)_32%,rgba(6,6,6,0.34)_70%,rgba(6,6,6,0.62)_100%)]"
+      />
+      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent via-black/15 to-[var(--ink)]" />
 
+      <div className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-center px-6 py-24 sm:px-8 lg:px-10">
         <div className="max-w-4xl space-y-7">
           <motion.p
             className="text-xs font-medium tracking-[0.26em] text-white/72 uppercase"
@@ -286,12 +222,12 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
             initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
             whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             animate={
-              prefersReducedMotion ?
-                undefined
-              : {
-                  opacity: [0.58, 0.92, 0.58],
-                  y: [0, 4, 0],
-                }
+              prefersReducedMotion
+                ? undefined
+                : {
+                    opacity: [0.58, 0.92, 0.58],
+                    y: [0, 4, 0],
+                  }
             }
             viewport={{ once: true, amount: 0.6 }}
             transition={{
@@ -307,6 +243,6 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
           </motion.div>
         </div>
       </div>
-    </StorySection>
+    </section>
   );
 }
