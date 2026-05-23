@@ -6,21 +6,22 @@ import {
   ArrowDown,
   ArrowRight,
   BriefcaseBusiness,
-  Download,
+  FileText,
   FolderGit2,
   Mail,
   Network,
 } from "lucide-react";
 import {
   motion,
+  useMotionValue,
   useReducedMotion,
   useScroll,
+  useSpring,
   useTransform,
 } from "motion/react";
 
 import { GlowDivider } from "@/components/GlowDivider";
 import { useAnimationProvider } from "@/components/AnimationProvider";
-import { useRecruiterMode } from "@/components/RecruiterModeProvider";
 import { SafeImage } from "@/components/SafeImage";
 import { StorySection } from "@/components/StorySection";
 import { buttonVariants } from "@/components/ui/button";
@@ -34,7 +35,7 @@ type HeroProps = {
   resumeHref: string;
 };
 
-const roleLine = "AI Engineer / GenAI / RAG / Agentic AI / ML";
+const roleLine = "AI Engineer · GenAI · RAG · Agentic AI · ML";
 const heroBio =
   "Building intelligent systems with Python, LangChain, LangGraph, FastAPI, Streamlit, and production-grade AI workflows. Focused on GenAI, RAG, AI agents, analytics systems, and AI safety.";
 
@@ -54,9 +55,9 @@ const ctaButtons = [
     variant: "outline" as const,
   },
   {
-    label: "Download Resume",
+    label: "Resume",
     href: "resume",
-    icon: Download,
+    icon: FileText,
     slash: "full",
     variant: "outline" as const,
   },
@@ -85,15 +86,19 @@ const socialButtons = [
 
 export function Hero({ chapter, resumeHref }: HeroProps) {
   const prefersReducedMotion = useReducedMotion();
-  const { recruiterMode } = useRecruiterMode();
   const { canUseCustomCursor } = useAnimationProvider();
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  const heroImageY = useTransform(scrollYProgress, [0, 1], [0, 84]);
-  const enablePointerParallax = canUseCustomCursor && !prefersReducedMotion && !recruiterMode;
+
+  const heroImageY = useTransform(scrollYProgress, [0, 1], [0, 90]);
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const smoothX = useSpring(pointerX, { stiffness: 70, damping: 20, mass: 0.45 });
+  const smoothY = useSpring(pointerY, { stiffness: 70, damping: 20, mass: 0.45 });
+  const allowPointerParallax = canUseCustomCursor && !prefersReducedMotion;
 
   return (
     <StorySection
@@ -109,35 +114,54 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
     >
       <div
         ref={sectionRef}
-        className="relative isolate grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_18rem] lg:items-end"
+        className="relative isolate"
+        onPointerMove={
+          allowPointerParallax ?
+            (event) => {
+              const bounds = event.currentTarget.getBoundingClientRect();
+              const nextX = ((event.clientX - bounds.left) / bounds.width - 0.5) * 26;
+              const nextY = ((event.clientY - bounds.top) / bounds.height - 0.5) * 18;
+              pointerX.set(nextX);
+              pointerY.set(nextY);
+            }
+          : undefined
+        }
+        onPointerLeave={
+          allowPointerParallax ?
+            () => {
+              pointerX.set(0);
+              pointerY.set(0);
+            }
+          : undefined
+        }
       >
         <motion.div
           aria-hidden
           className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-          style={prefersReducedMotion || recruiterMode ? undefined : { y: heroImageY }}
+          style={prefersReducedMotion ? undefined : { y: heroImageY }}
         >
-          <SafeImage
-            src={assets.scholarPath}
-            alt="Hero background atmosphere"
-            fill
-            priority
-            quality={95}
-            sizes="100vw"
-            className={cn(
-              "object-cover object-[62%_42%] transition-transform duration-500",
-              enablePointerParallax ? "scale-[1.02]" : "",
-              recruiterMode
-                ? "opacity-16 sm:opacity-[0.18] md:opacity-[0.2]"
-                : "opacity-26 sm:opacity-30 md:opacity-34 lg:opacity-38",
-            )}
-          />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_78%,rgba(249,115,22,0.26),transparent_30%),radial-gradient(circle_at_62%_16%,rgba(251,191,36,0.10),transparent_24%),linear-gradient(90deg,rgba(4,4,4,0.92)_0%,rgba(4,4,4,0.52)_44%,rgba(4,4,4,0.82)_100%)]" />
+          <motion.div
+            className="absolute inset-0"
+            style={allowPointerParallax ? { x: smoothX, y: smoothY } : undefined}
+          >
+            <SafeImage
+              src={assets.cherryBlossomDawn}
+              alt="Hero background atmosphere"
+              fill
+              priority
+              quality={96}
+              sizes="100vw"
+              className="object-cover object-center opacity-[0.9]"
+            />
+          </motion.div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_78%,rgba(249,115,22,0.38),transparent_26%),radial-gradient(circle_at_74%_14%,rgba(251,191,36,0.12),transparent_22%),linear-gradient(90deg,rgba(5,5,5,0.92)_0%,rgba(10,7,6,0.6)_42%,rgba(6,6,6,0.72)_100%),linear-gradient(180deg,rgba(10,6,5,0.22)_0%,rgba(8,7,7,0.42)_58%,rgba(4,4,4,0.8)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(115deg,rgba(0,0,0,0.44)_0%,rgba(0,0,0,0.08)_42%,rgba(0,0,0,0.54)_100%)]" />
         </motion.div>
 
-        <div className="max-w-3xl space-y-7">
+        <div className="max-w-4xl space-y-7">
           <motion.p
-            className="text-xs font-medium tracking-[0.26em] text-white/68 uppercase"
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+            className="text-xs font-medium tracking-[0.26em] text-white/72 uppercase"
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
             whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.8 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
@@ -145,20 +169,20 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
             Chapter 01 - Cherry Blossom Dawn
           </motion.p>
 
-          <h1 className="font-heading text-[clamp(3rem,8vw,6.85rem)] leading-[0.9] tracking-[0.08em] text-white uppercase">
-            <span className="flex flex-col gap-y-3">
+          <h1 className="font-heading text-[clamp(3.15rem,9vw,7.2rem)] leading-[0.92] tracking-[0.06em] text-white uppercase">
+            <span className="flex flex-col gap-y-2 sm:gap-y-3">
               <motion.span
-                className="inline-block drop-shadow-[0_8px_30px_rgba(0,0,0,0.45)]"
-                initial={prefersReducedMotion ? false : { opacity: 0, y: 24, filter: "blur(10px)" }}
+                className="inline-block drop-shadow-[0_12px_34px_rgba(0,0,0,0.55)]"
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 24, filter: "blur(8px)" }}
                 whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: true, amount: 0.7 }}
-                transition={{ duration: 0.84, delay: prefersReducedMotion ? 0 : 0.08, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.8, delay: prefersReducedMotion ? 0 : 0.08, ease: [0.22, 1, 0.36, 1] }}
               >
                 YASWANTH
               </motion.span>
               <motion.span
-                className="inline-block bg-[linear-gradient(90deg,#fff6ef_0%,rgba(245,214,197,0.94)_46%,rgba(249,115,22,0.92)_100%)] bg-clip-text text-transparent drop-shadow-[0_8px_30px_rgba(0,0,0,0.45)]"
-                initial={prefersReducedMotion ? false : { opacity: 0, y: 24, filter: "blur(10px)" }}
+                className="inline-block bg-[linear-gradient(90deg,#fffaf4_0%,rgba(245,214,197,0.92)_42%,rgba(249,115,22,0.94)_100%)] bg-clip-text text-transparent drop-shadow-[0_12px_34px_rgba(0,0,0,0.55)]"
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 24, filter: "blur(8px)" }}
                 whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: true, amount: 0.7 }}
                 transition={{ duration: 0.88, delay: prefersReducedMotion ? 0 : 0.18, ease: [0.22, 1, 0.36, 1] }}
@@ -169,51 +193,33 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
           </h1>
 
           <motion.p
-            className="max-w-2xl text-sm font-medium tracking-[0.18em] text-[var(--mist)] uppercase sm:text-base"
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
+            className="max-w-3xl text-sm font-medium tracking-[0.18em] text-[var(--mist)] uppercase sm:text-base"
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
             whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.75 }}
-            transition={{
-              duration: 0.7,
-              delay: prefersReducedMotion ? 0 : 0.3,
-              ease: [0.22, 1, 0.36, 1],
-            }}
+            transition={{ duration: 0.68, delay: prefersReducedMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
             {roleLine}
           </motion.p>
 
-          {recruiterMode ? (
-            <div className="inline-flex border border-white/12 bg-white/[0.05] px-3 py-2 text-[0.68rem] tracking-[0.18em] text-white/86 uppercase">
-              Recruiter Mode
-            </div>
-          ) : null}
-
           <GlowDivider accent={chapter.accent} className="max-w-[220px]" />
 
           <motion.p
-            className="max-w-2xl text-base leading-8 text-white/78 sm:text-lg"
+            className="max-w-3xl text-base leading-8 text-white/82 sm:text-lg"
             initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
             whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.7 }}
-            transition={{
-              duration: 0.75,
-              delay: prefersReducedMotion ? 0 : 0.42,
-              ease: [0.22, 1, 0.36, 1],
-            }}
+            transition={{ duration: 0.74, delay: prefersReducedMotion ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}
           >
             {heroBio}
           </motion.p>
 
           <motion.div
             className="flex flex-wrap gap-3 pt-2"
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 22 }}
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
             whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.65 }}
-            transition={{
-              duration: 0.75,
-              delay: prefersReducedMotion ? 0 : 0.52,
-              ease: [0.22, 1, 0.36, 1],
-            }}
+            viewport={{ once: true, amount: 0.64 }}
+            transition={{ duration: 0.74, delay: prefersReducedMotion ? 0 : 0.54, ease: [0.22, 1, 0.36, 1] }}
           >
             {ctaButtons.map((item, index) => {
               const href = item.href === "resume" ? resumeHref : item.href;
@@ -227,19 +233,15 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
                     buttonVariants({ size: "lg", variant: item.variant }),
                     "rounded-none border px-4 tracking-[0.12em] uppercase",
                     item.variant === "default"
-                      ? "border-[var(--samurai-red)] bg-[linear-gradient(135deg,rgba(200,32,45,0.92)_0%,rgba(149,18,27,0.92)_100%)] text-white hover:border-[var(--forge-orange)] hover:bg-[linear-gradient(135deg,rgba(200,32,45,1)_0%,rgba(249,115,22,0.92)_100%)]"
-                      : "border-[rgba(255,255,255,0.14)] bg-black/28 text-white hover:border-[var(--forge-orange)] hover:bg-white/8",
+                      ? "border-[var(--samurai-red)] bg-[linear-gradient(135deg,rgba(200,32,45,0.94)_0%,rgba(159,22,32,0.94)_100%)] text-white hover:border-[var(--forge-orange)] hover:bg-[linear-gradient(135deg,rgba(200,32,45,1)_0%,rgba(249,115,22,0.92)_100%)]"
+                      : "border-[rgba(255,255,255,0.14)] bg-black/30 text-white hover:border-[var(--forge-orange)] hover:bg-white/8",
                   )}
                   initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
                   whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                   whileHover={prefersReducedMotion ? undefined : { y: -2 }}
                   whileTap={prefersReducedMotion ? undefined : { scale: 0.98 }}
                   viewport={{ once: true, amount: 0.6 }}
-                  transition={{
-                    duration: 0.55,
-                    delay: prefersReducedMotion ? 0 : 0.58 + index * 0.07,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
+                  transition={{ duration: 0.52, delay: prefersReducedMotion ? 0 : 0.58 + index * 0.07, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <item.icon className="mr-2 size-4" />
                   {item.label}
@@ -253,11 +255,7 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
             initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
             whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.58 }}
-            transition={{
-              duration: 0.68,
-              delay: prefersReducedMotion ? 0 : 0.78,
-              ease: [0.22, 1, 0.36, 1],
-            }}
+            transition={{ duration: 0.66, delay: prefersReducedMotion ? 0 : 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             {socialButtons.map((item, index) => (
               <motion.a
@@ -268,18 +266,14 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
                 data-slash-trigger="light"
                 className={cn(
                   buttonVariants({ size: "lg", variant: "ghost" }),
-                  "rounded-none border border-transparent px-4 tracking-[0.12em] text-white/82 uppercase hover:border-white/12 hover:bg-white/8 hover:text-white",
+                  "rounded-none border border-transparent px-4 tracking-[0.12em] text-white/84 uppercase hover:border-white/12 hover:bg-white/8 hover:text-white",
                 )}
                 initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
                 whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
                 whileHover={prefersReducedMotion ? undefined : { y: -2 }}
                 whileTap={prefersReducedMotion ? undefined : { scale: 0.98 }}
                 viewport={{ once: true, amount: 0.58 }}
-                transition={{
-                  duration: 0.48,
-                  delay: prefersReducedMotion ? 0 : 0.84 + index * 0.05,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
+                transition={{ duration: 0.46, delay: prefersReducedMotion ? 0 : 0.84 + index * 0.05, ease: [0.22, 1, 0.36, 1] }}
               >
                 <item.icon className="mr-2 size-4" />
                 {item.label}
@@ -288,21 +282,21 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
           </motion.div>
 
           <motion.div
-            className="flex items-center gap-3 pt-4 text-xs tracking-[0.18em] text-white/56 uppercase"
+            className="flex items-center gap-3 pt-3 text-xs tracking-[0.18em] text-white/58 uppercase"
             initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
             whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             animate={
-              prefersReducedMotion
-                ? undefined
-                : {
-                    opacity: [0.56, 0.95, 0.56],
-                    y: [0, 4, 0],
-                  }
+              prefersReducedMotion ?
+                undefined
+              : {
+                  opacity: [0.58, 0.92, 0.58],
+                  y: [0, 4, 0],
+                }
             }
             viewport={{ once: true, amount: 0.6 }}
             transition={{
               duration: prefersReducedMotion ? 0.7 : 2.2,
-              delay: prefersReducedMotion ? 0 : 1.02,
+              delay: prefersReducedMotion ? 0 : 1.05,
               ease: "easeInOut",
               repeat: prefersReducedMotion ? 0 : Number.POSITIVE_INFINITY,
               repeatDelay: prefersReducedMotion ? 0 : 0.2,
@@ -312,63 +306,6 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
             <span>Scroll to enter the story</span>
           </motion.div>
         </div>
-
-        <motion.aside
-          className={cn(
-            "hidden lg:block",
-            recruiterMode
-              ? "text-white/88"
-              : "text-white/82",
-          )}
-          initial={prefersReducedMotion ? false : { opacity: 0, x: 24 }}
-          whileInView={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{
-            duration: 0.8,
-            delay: prefersReducedMotion ? 0 : 0.5,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-        >
-          <div className="relative overflow-hidden border border-[rgba(255,255,255,0.12)] bg-black/24 shadow-[0_24px_64px_rgba(0,0,0,0.24)] backdrop-blur-sm">
-            <div className="relative aspect-[4/5]">
-              <SafeImage
-                src={assets.contactRain}
-                alt="Night gate atmosphere"
-                fill
-                quality={94}
-                sizes="22rem"
-                className="object-cover object-center opacity-82"
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.76)_100%)]" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.12),transparent_22%)]" />
-              <div className="absolute inset-x-0 bottom-0 border-t border-white/10 bg-black/36 p-5">
-                <p className="text-[0.68rem] font-medium tracking-[0.22em] text-[var(--forge-orange)] uppercase">
-                  Built for real systems
-                </p>
-                <div className="mt-4 space-y-3 text-sm text-white/76">
-                  {["GenAI Workflows", "RAG Pipelines", "Agentic Systems", "Reliability Evaluation"].map(
-                    (item, index) => (
-                      <motion.div
-                        key={item}
-                        className="border-l border-[var(--samurai-red)]/36 pl-3"
-                        initial={prefersReducedMotion ? false : { opacity: 0, x: 12 }}
-                        whileInView={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
-                        viewport={{ once: true, amount: 0.4 }}
-                        transition={{
-                          duration: 0.45,
-                          delay: prefersReducedMotion ? 0 : 0.7 + index * 0.05,
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
-                      >
-                        {item}
-                      </motion.div>
-                    ),
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.aside>
       </div>
     </StorySection>
   );

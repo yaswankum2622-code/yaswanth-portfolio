@@ -5,7 +5,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 
 import { MobileMenu } from "@/components/MobileMenu";
-import { RecruiterModeToggle } from "@/components/RecruiterModeToggle";
 import { SafeImage } from "@/components/SafeImage";
 import { buttonVariants } from "@/components/ui/button";
 import { profile } from "@/data/profile";
@@ -144,13 +143,12 @@ export function Navbar({ name, links, resumeHref }: NavbarProps) {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <RecruiterModeToggle />
           <Link
             href={resumeHref}
             data-slash-trigger="full"
             className={cn(
               buttonVariants({ size: "sm", variant: "outline" }),
-              "rounded-none border-white/12 bg-black/25 px-4 tracking-[0.14em] text-white uppercase hover:border-[rgba(249,115,22,0.28)] hover:bg-white/[0.06]",
+              "rounded-none border-[rgba(249,115,22,0.24)] bg-[linear-gradient(135deg,rgba(200,32,45,0.16)_0%,rgba(249,115,22,0.16)_100%)] px-4 tracking-[0.14em] text-white uppercase hover:border-[rgba(249,115,22,0.44)] hover:bg-[linear-gradient(135deg,rgba(200,32,45,0.24)_0%,rgba(249,115,22,0.20)_100%)]",
             )}
           >
             Resume

@@ -3,8 +3,10 @@
 import { Download, Mail, Network } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 
+import { SafeImage } from "@/components/SafeImage";
 import { StorySection } from "@/components/StorySection";
 import { buttonVariants } from "@/components/ui/button";
+import { assets } from "@/data/assets";
 import { profile } from "@/data/profile";
 import type { StoryChapter } from "@/data/storyChapters";
 import { cn } from "@/lib/utils";
@@ -14,13 +16,10 @@ type OpenToWorkProps = {
   resumeHref: string;
 };
 
-const roleTargets = [
-  "AI Engineer",
-  "Data Scientist",
-  "Data Analyst",
-  "Product Analyst",
-  "Business Analyst",
-  "ML Engineer",
+const hiringReasons = [
+  "I build systems, not isolated demos. That means architecture, evaluation, deployment, clarity, and practical decision support are designed together.",
+  "I am comfortable working across AI engineering, analytics, product context, compliance thinking, and workflow-heavy environments where reliability matters.",
+  "I bring a production mindset: understand the problem deeply, structure the solution carefully, and make the result usable, testable, and trustworthy.",
 ];
 
 export function OpenToWork({ chapter, resumeHref }: OpenToWorkProps) {
@@ -36,10 +35,22 @@ export function OpenToWork({ chapter, resumeHref }: OpenToWorkProps) {
       accent={chapter.accent}
       backgroundType="golden-dawn"
       image={profile.openToWorkImage}
-      imagePosition="center"
+      imagePosition="center-left"
       className="text-center"
     >
-      <div className="mx-auto max-w-4xl space-y-8">
+      <div className="relative isolate mx-auto max-w-5xl space-y-8 overflow-hidden">
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden rounded-[1.5rem]">
+          <SafeImage
+            src={assets.openToWork}
+            alt="Open to work background atmosphere"
+            fill
+            quality={96}
+            sizes="100vw"
+            className="object-cover object-[30%_42%] opacity-42"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,6,6,0.86)_0%,rgba(10,10,10,0.48)_48%,rgba(8,8,8,0.82)_100%)]" />
+        </div>
+
         <motion.div
           className="space-y-4"
           initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
@@ -55,31 +66,30 @@ export function OpenToWork({ chapter, resumeHref }: OpenToWorkProps) {
             />
             Available for New Opportunities
           </div>
-          <p className="mx-auto max-w-3xl text-lg leading-8 text-white/78">
-            I am open to building and scaling intelligent systems across AI, analytics, product,
-            fintech, and workflow-heavy teams that care about shipping responsibly.
+          <p className="mx-auto max-w-3xl text-lg leading-8 text-white/82">
+            If you need someone who can move from problem framing to structured AI execution, I can help design systems that are technically strong, clearly explained, and ready for real use.
           </p>
-          <p className="text-sm tracking-[0.18em] text-white/58 uppercase">
-            Bengaluru &middot; India &middot; Remote &middot; Global
+          <p className="text-sm tracking-[0.18em] text-white/62 uppercase">
+            India · Remote · Hybrid · Global
           </p>
         </motion.div>
 
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          {roleTargets.map((role, index) => (
-            <motion.span
-              key={role}
-              className="border border-[rgba(255,255,255,0.12)] bg-black/24 px-3 py-2 text-[0.72rem] tracking-[0.16em] text-white/82 uppercase"
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+        <div className="grid gap-4 md:grid-cols-3">
+          {hiringReasons.map((reason, index) => (
+            <motion.article
+              key={reason}
+              className="border border-[rgba(255,255,255,0.12)] bg-black/28 px-5 py-5 text-left shadow-[0_18px_48px_rgba(0,0,0,0.18)]"
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
               whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.18 }}
               transition={{
-                duration: 0.4,
-                delay: prefersReducedMotion ? 0 : 0.12 + index * 0.04,
+                duration: 0.46,
+                delay: prefersReducedMotion ? 0 : 0.12 + index * 0.05,
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              {role}
-            </motion.span>
+              <p className="text-sm leading-7 text-white/76">{reason}</p>
+            </motion.article>
           ))}
         </div>
 
@@ -88,7 +98,7 @@ export function OpenToWork({ chapter, resumeHref }: OpenToWorkProps) {
           initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
           whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.65, delay: prefersReducedMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.65, delay: prefersReducedMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
         >
           <a
             href={`mailto:${profile.email}`}
@@ -123,7 +133,7 @@ export function OpenToWork({ chapter, resumeHref }: OpenToWorkProps) {
             )}
           >
             <Download className="mr-2 size-4" />
-            Download Resume
+            Resume
           </a>
         </motion.div>
       </div>

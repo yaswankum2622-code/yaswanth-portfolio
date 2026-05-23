@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import { Menu, MoveRight } from "lucide-react";
 
-import { RecruiterModeToggle } from "@/components/RecruiterModeToggle";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Sheet,
@@ -46,13 +45,11 @@ export function MobileMenu({ links, resumeHref }: MobileMenuProps) {
             Yaswanth Forge
           </SheetTitle>
           <SheetDescription className="text-left text-white/58">
-            Quick portfolio navigation with a recruiter-friendly view when needed.
+            Quick portfolio navigation across the full story.
           </SheetDescription>
         </SheetHeader>
 
         <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-6 py-6">
-          <RecruiterModeToggle className="items-start" showBadge={false} />
-
           <nav className="grid gap-2">
             {links.map((link) => (
               <a

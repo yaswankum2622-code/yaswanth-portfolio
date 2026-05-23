@@ -1,17 +1,13 @@
-export type SkillLevel =
-  | "Advanced"
-  | "Strong"
-  | "Production Practice"
-  | "Working Knowledge";
+export type SkillBand = "Advanced" | "Intermediate" | "Familiar";
 
 export type SkillItem = {
   name: string;
-  level: SkillLevel;
+  symbol: string;
 };
 
 export type SkillGroup = {
   id: string;
-  title: string;
+  title: SkillBand;
   accent: string;
   description: string;
   items: SkillItem[];
@@ -19,67 +15,62 @@ export type SkillGroup = {
 
 export const skillGroups: SkillGroup[] = [
   {
-    id: "ai-ml",
-    title: "AI / ML",
-    accent: "forge",
-    description: "Core capability across intelligent workflows, retrieval systems, evaluation, and model behavior.",
-    items: [
-      { name: "LLMs and GenAI", level: "Advanced" },
-      { name: "Agentic AI", level: "Strong" },
-      { name: "RAG", level: "Strong" },
-      { name: "LangChain", level: "Strong" },
-      { name: "LangGraph", level: "Strong" },
-      { name: "Machine Learning", level: "Advanced" },
-      { name: "Deep Learning", level: "Strong" },
-      { name: "Prompt Engineering", level: "Strong" },
-      { name: "AI Red Teaming", level: "Production Practice" },
-    ],
-  },
-  {
-    id: "data-analytics",
-    title: "Data and Analytics",
-    accent: "amber",
-    description: "Analytical foundations for experimentation, dashboards, business insight, and measurement.",
-    items: [
-      { name: "Python", level: "Advanced" },
-      { name: "SQL", level: "Advanced" },
-      { name: "Statistics", level: "Strong" },
-      { name: "A/B Testing", level: "Strong" },
-      { name: "Power BI", level: "Working Knowledge" },
-      { name: "Tableau", level: "Working Knowledge" },
-      { name: "Data Visualization", level: "Strong" },
-      { name: "Business Analytics", level: "Strong" },
-    ],
-  },
-  {
-    id: "engineering",
-    title: "Engineering",
+    id: "advanced",
+    title: "Advanced",
     accent: "crimson",
-    description: "Execution patterns for APIs, interfaces, testing, data stores, and repeatable delivery.",
+    description: "What you build production systems with",
     items: [
-      { name: "FastAPI", level: "Strong" },
-      { name: "Streamlit", level: "Strong" },
-      { name: "Docker", level: "Production Practice" },
-      { name: "GitHub Actions", level: "Working Knowledge" },
-      { name: "PostgreSQL", level: "Working Knowledge" },
-      { name: "SQLite", level: "Strong" },
-      { name: "APIs", level: "Strong" },
-      { name: "Testing", level: "Production Practice" },
+      { name: "Python", symbol: "Py" },
+      { name: "SQL", symbol: "DB" },
+      { name: "LLMs and GenAI", symbol: "AI" },
+      { name: "Agentic AI", symbol: "AG" },
+      { name: "RAG Systems", symbol: "RG" },
+      { name: "LangChain", symbol: "LC" },
+      { name: "LangGraph", symbol: "LG" },
+      { name: "Prompt Engineering", symbol: "PE" },
+      { name: "Red Teaming", symbol: "RT" },
+      { name: "FastAPI", symbol: "API" },
+      { name: "Streamlit", symbol: "UI" },
+      { name: "Statistical Modeling", symbol: "ST" },
+      { name: "SHAP", symbol: "XP" },
     ],
   },
   {
-    id: "cloud-deployment",
-    title: "Cloud and Deployment",
+    id: "intermediate",
+    title: "Intermediate",
     accent: "gold",
-    description: "Deployment awareness across hosting, observability, CI/CD, and production feedback loops.",
+    description: "Comfortable. Shipped real projects with these",
     items: [
-      { name: "AWS", level: "Working Knowledge" },
-      { name: "Vercel", level: "Production Practice" },
-      { name: "Netlify", level: "Production Practice" },
-      { name: "GitHub", level: "Strong" },
-      { name: "CI/CD", level: "Production Practice" },
-      { name: "Model Monitoring", level: "Working Knowledge" },
-      { name: "Evidently AI", level: "Working Knowledge" },
+      { name: "Machine Learning", symbol: "ML" },
+      { name: "LightGBM", symbol: "GB" },
+      { name: "GNN", symbol: "GNN" },
+      { name: "Evidently AI", symbol: "EV" },
+      { name: "ML Monitoring", symbol: "MON" },
+      { name: "A/B Testing", symbol: "AB" },
+      { name: "PostgreSQL", symbol: "PG" },
+      { name: "Docker", symbol: "DK" },
+      { name: "AWS", symbol: "AWS" },
+      { name: "GitHub Actions", symbol: "CI" },
+      { name: "Business Analytics", symbol: "BA" },
+      { name: "Data Visualization", symbol: "DV" },
+    ],
+  },
+  {
+    id: "familiar",
+    title: "Familiar",
+    accent: "steel",
+    description: "Explored. Know when and how to use",
+    items: [
+      { name: "Federated Learning", symbol: "FL" },
+      { name: "Neo4j", symbol: "N4" },
+      { name: "Redis", symbol: "RD" },
+      { name: "Spark", symbol: "SP" },
+      { name: "dbt", symbol: "DBT" },
+      { name: "Tableau", symbol: "TB" },
+      { name: "Power BI", symbol: "BI" },
+      { name: "REST API Design", symbol: "REST" },
+      { name: "Linux", symbol: "LX" },
+      { name: "Bash", symbol: "SH" },
     ],
   },
 ];

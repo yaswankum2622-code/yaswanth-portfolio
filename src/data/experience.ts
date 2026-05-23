@@ -25,18 +25,18 @@ export const experience: ExperienceEntry[] = [
   {
     id: "aramalgorithm",
     company: "AramAlgorithm.ai",
-    role: "AI Red Team Tester - GenAI Evaluation, Agentic AI Reliability and Responsible AI",
+    role: "AI Red Team Engineer",
     location: "Remote",
-    period: "Mar 2025 - Feb 2026",
+    period: "12 Mar 2025 - 12 Feb 2026",
     accent: "crimson",
     image: assets.experienceRoad,
     summary:
-      "Structured evaluation, reliability analysis, and responsible AI testing across LLM chatbots, RAG pipelines, and agentic AI systems.",
+      "Remote AI engineering work focused on red-teaming, safety evaluation, evidence pipelines, and measurable quality controls for LLM, RAG, and agentic AI systems.",
     achievements: [
-      "Designed Python-based adversarial prompt scenarios for LLM chatbots, RAG pipelines, and agentic AI systems using Garak, PyRIT, and PromptBench.",
-      "Evaluated grounded retrieval behavior, multi-agent handoffs, orchestration edge cases, and unsafe output patterns.",
-      "Delivered structured evaluation reports with severity ratings, reproduction steps, impact assessments, and guardrail recommendations.",
-      "Supported repeatable AI quality assurance practices across an 11-month remote workstream.",
+      "Designed and implemented structured red-teaming frameworks for LLM safety, robustness, misuse risks, and failure-mode discovery across production-style AI workflows.",
+      "Built Python-based adversarial testing scenarios and evaluation runs for LLM chatbots, retrieval pipelines, and agentic orchestration flows.",
+      "Created automated pipelines that turned evaluation outputs into structured, compliance-ready evidence artifacts for engineering and review teams.",
+      "Worked with engineering and compliance stakeholders to translate responsible AI requirements into repeatable test plans, severity-driven findings, and measurable evaluation criteria.",
     ],
   },
 ];

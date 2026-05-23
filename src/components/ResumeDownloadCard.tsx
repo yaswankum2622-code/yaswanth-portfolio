@@ -39,7 +39,7 @@ export function ResumeDownloadCard({
       />
       <div className="relative space-y-4">
         <p className="text-[0.68rem] tracking-[0.18em] text-white/56 uppercase">
-          Recruiter actions
+          Resume actions
         </p>
         <div className="flex flex-wrap gap-2">
           {isPdfAvailable && pdfHref ? (

@@ -1,4 +1,5 @@
 export const assets = {
+  entranceForge: "/assets/entrance-forge.png",
   heroCover: "/assets/portfolio-cover.png",
   portrait: "/assets/portrait.jpg",
   educationTemple: "/assets/education-temple.jpg",
@@ -28,6 +29,7 @@ export const assets = {
   carbonLedgerX: "/assets/projects/cabonledgerx.jpg",
   cortexAgent: "/assets/cortexagent.jpg",
   bankingOS: "/assets/banking-os.jpg",
+  bankingOSUpscaled: "/assets/banking-os-4k.png",
 } as const;
 
 export type AssetKey = keyof typeof assets;

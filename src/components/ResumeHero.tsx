@@ -49,15 +49,16 @@ export function ResumeHero({
       transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="overflow-hidden border border-[rgba(200,32,45,0.14)] bg-[linear-gradient(180deg,rgba(6,6,6,0.88)_0%,rgba(12,10,10,0.96)_100%)] shadow-[0_24px_64px_rgba(0,0,0,0.24)] backdrop-blur-sm">
-        <div className="relative h-32 overflow-hidden border-b border-white/8">
+        <div className="relative h-44 overflow-hidden border-b border-white/8">
           <SafeImage
             src={previewImage}
             alt="Resume atmosphere"
             fill
             sizes="(min-width: 1024px) 20rem, 100vw"
-            className="object-cover object-center opacity-54"
+            quality={96}
+            className="object-cover object-center opacity-72"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,4,4,0.16)_0%,rgba(4,4,4,0.82)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,4,4,0.12)_0%,rgba(4,4,4,0.78)_100%)]" />
         </div>
 
         <div className="space-y-6 p-5 sm:p-6">

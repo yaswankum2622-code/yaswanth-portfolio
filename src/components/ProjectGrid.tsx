@@ -126,8 +126,16 @@ export function ProjectGrid({ chapter }: ProjectGridProps) {
         <div className="relative space-y-8">
           <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
             <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:84px_84px]" />
-            <div className="absolute left-[8%] top-[12%] h-36 w-36 rounded-full bg-[rgba(200,32,45,0.10)] blur-3xl" />
-            <div className="absolute right-[10%] top-[32%] h-44 w-44 rounded-full bg-[rgba(249,115,22,0.08)] blur-3xl" />
+            <motion.div
+              className="absolute left-[8%] top-[12%] h-36 w-36 rounded-full bg-[rgba(200,32,45,0.10)] blur-3xl"
+              animate={prefersReducedMotion ? undefined : { opacity: [0.42, 0.9, 0.42], scale: [1, 1.06, 1] }}
+              transition={{ duration: 4.6, repeat: prefersReducedMotion ? 0 : Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute right-[10%] top-[32%] h-44 w-44 rounded-full bg-[rgba(249,115,22,0.08)] blur-3xl"
+              animate={prefersReducedMotion ? undefined : { opacity: [0.36, 0.76, 0.36], scale: [1, 1.08, 1] }}
+              transition={{ duration: 5.1, repeat: prefersReducedMotion ? 0 : Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+            />
           </div>
 
           <ProjectFilters

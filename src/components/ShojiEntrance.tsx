@@ -14,11 +14,10 @@ type EntrancePhase = "idle" | "opening" | "closed";
 
 const panelGridStyle = {
   backgroundImage: `
-    linear-gradient(to right, rgba(200,32,45,0.16) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(200,32,45,0.16) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(4,4,4,0.98) 0%, rgba(15,11,10,0.94) 100%)
+    linear-gradient(to right, rgba(200,32,45,0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(200,32,45,0.14) 1px, transparent 1px)
   `,
-  backgroundSize: "52px 100%, 100% 52px, 100% 100%",
+  backgroundSize: "52px 100%, 100% 52px",
 };
 
 export function ShojiEntrance() {
@@ -35,7 +34,6 @@ export function ShojiEntrance() {
     }
 
     document.body.style.overflow = "";
-
     return undefined;
   }, [hasEnteredSession]);
 
@@ -79,13 +77,27 @@ export function ShojiEntrance() {
           exit={{ opacity: 0 }}
           transition={{
             duration: reducedMotion ? 0.18 : 0.3,
-            delay: reducedMotion ? 0.05 : 1.45,
+            delay: reducedMotion ? 0.05 : 1.48,
             ease: [0.22, 1, 0.36, 1],
           }}
         >
+          <div className="absolute inset-0">
+            <SafeImage
+              src={assets.entranceForge}
+              alt="Entrance background atmosphere"
+              fill
+              priority
+              quality={96}
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,4,4,0.52)_0%,rgba(4,4,4,0.76)_50%,rgba(4,4,4,0.9)_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(200,32,45,0.18)_0%,transparent_34%),radial-gradient(circle_at_50%_68%,rgba(249,115,22,0.12)_0%,transparent_24%)]" />
+          </div>
+
           <motion.div
             aria-hidden
-            className="absolute inset-y-0 left-0 w-1/2 border-r border-[var(--border-red)]/80 shadow-[inset_-0.5px_0_0_rgba(255,255,255,0.06)]"
+            className="absolute inset-y-0 left-0 w-1/2 border-r border-[var(--border-red)]/55 bg-[rgba(4,4,4,0.18)]"
             style={panelGridStyle}
             initial={{ x: 0 }}
             animate={{ x: phase === "opening" && !reducedMotion ? "-104%" : 0 }}
@@ -93,26 +105,17 @@ export function ShojiEntrance() {
           />
           <motion.div
             aria-hidden
-            className="absolute inset-y-0 right-0 w-1/2 border-l border-[var(--border-red)]/80 shadow-[inset_0.5px_0_0_rgba(255,255,255,0.06)]"
+            className="absolute inset-y-0 right-0 w-1/2 border-l border-[var(--border-red)]/55 bg-[rgba(4,4,4,0.18)]"
             style={panelGridStyle}
             initial={{ x: 0 }}
             animate={{ x: phase === "opening" && !reducedMotion ? "104%" : 0 }}
             transition={{ duration: 1.6, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
           />
 
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(200,32,45,0.12)_0%,transparent_36%),linear-gradient(180deg,rgba(4,4,4,0.25)_0%,rgba(4,4,4,0.8)_100%)]" />
-
-          <motion.div
-            aria-hidden
-            className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0)_58%)] blur-3xl"
-            animate={{ opacity: phase === "opening" ? 0.4 : 0.18 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          />
-
           {!reducedMotion ? (
             <motion.div
               aria-hidden
-              className="absolute left-1/2 top-1/2 h-[2px] w-[140vw] -translate-x-1/2 -translate-y-1/2 rotate-[-15deg] bg-[linear-gradient(90deg,rgba(200,32,45,0)_0%,rgba(200,32,45,0.68)_30%,rgba(255,244,228,0.96)_50%,rgba(249,115,22,0.8)_72%,rgba(249,115,22,0)_100%)] shadow-[0_0_36px_rgba(255,230,207,0.42)]"
+              className="absolute left-1/2 top-1/2 h-[2px] w-[140vw] -translate-x-1/2 -translate-y-1/2 rotate-[-15deg] bg-[linear-gradient(90deg,rgba(200,32,45,0)_0%,rgba(200,32,45,0.68)_28%,rgba(255,244,228,0.98)_50%,rgba(249,115,22,0.82)_72%,rgba(249,115,22,0)_100%)] shadow-[0_0_36px_rgba(255,230,207,0.42)]"
               initial={{ scaleX: 0.08, opacity: 0 }}
               animate={{
                 scaleX: phase === "opening" ? 1.08 : 0.08,
@@ -132,87 +135,30 @@ export function ShojiEntrance() {
             }}
             transition={{ duration: reducedMotion ? 0.18 : 0.28, ease: "easeOut" }}
           >
-            <div className="relative w-full max-w-4xl overflow-hidden border border-white/10 bg-[linear-gradient(180deg,rgba(5,5,5,0.78)_0%,rgba(10,8,8,0.92)_100%)] px-6 py-8 text-center shadow-[0_32px_120px_rgba(0,0,0,0.58)] backdrop-blur-xl sm:px-8 sm:py-10">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(200,32,45,0.16)_0%,transparent_38%),radial-gradient(circle_at_50%_100%,rgba(249,115,22,0.12)_0%,transparent_32%)]" />
-              <div className="grid gap-6 lg:grid-cols-[9rem_minmax(0,1fr)_9rem] lg:items-center">
-                <motion.div
-                  className="relative hidden aspect-[3/5] overflow-hidden border border-white/10 bg-black/30 lg:block"
-                  initial={reducedMotion ? false : { opacity: 0, x: -24 }}
-                  animate={reducedMotion ? undefined : { opacity: 1, x: 0 }}
-                  transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <SafeImage
-                    src={assets.contactRain}
-                    alt="Entrance gate atmosphere"
-                    fill
-                    quality={94}
-                    sizes="9rem"
-                    className="object-cover object-center opacity-88"
-                  />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.10)_0%,rgba(0,0,0,0.58)_100%)]" />
-                </motion.div>
-
-                <div className="relative z-10">
-                  <div className="mx-auto mb-6 h-px w-20 bg-[linear-gradient(90deg,transparent_0%,rgba(200,32,45,0.82)_50%,transparent_100%)]" />
-                  <h1 className="font-heading text-4xl font-semibold tracking-[0.1em] text-white sm:text-6xl">
-                    Yaswanth Forge
-                  </h1>
-                  <p className="mx-auto mt-4 max-w-xl text-sm leading-7 tracking-[0.08em] text-white/68 uppercase sm:text-[0.95rem]">
-                    AI engineering portfolio
-                  </p>
-                  <div className="mx-auto mt-6 flex max-w-xs items-center justify-center gap-3 lg:hidden">
-                    <div className="relative aspect-[5/4] flex-1 overflow-hidden border border-white/10">
-                      <SafeImage
-                        src={assets.contactRain}
-                        alt="Entrance gate atmosphere"
-                        fill
-                        quality={92}
-                        sizes="160px"
-                        className="object-cover object-center"
-                      />
-                      <div className="absolute inset-0 bg-black/28" />
-                    </div>
-                    <div className="relative aspect-[5/4] flex-1 overflow-hidden border border-white/10">
-                      <SafeImage
-                        src={assets.skillsForge}
-                        alt="AI forge atmosphere"
-                        fill
-                        quality={92}
-                        sizes="160px"
-                        className="object-cover object-center"
-                      />
-                      <div className="absolute inset-0 bg-black/28" />
-                    </div>
-                  </div>
-                  <div className="relative mt-10 inline-flex">
-                    <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(249,115,22,0.34)_0%,rgba(200,32,45,0.12)_55%,transparent_76%)] blur-2xl" />
-                    <motion.button
-                      type="button"
-                      onClick={handleEnter}
-                      whileTap={{ scale: 0.96 }}
-                      className="relative inline-flex items-center justify-center rounded-full border border-[var(--border-red)] bg-[linear-gradient(180deg,rgba(18,18,18,0.96)_0%,rgba(8,8,8,0.92)_100%)] px-8 py-3.5 text-sm font-semibold tracking-[0.18em] text-white uppercase shadow-[0_18px_48px_rgba(200,32,45,0.22)] transition hover:border-[rgba(249,115,22,0.5)] hover:text-white"
-                    >
-                      Enter the Forge
-                    </motion.button>
-                  </div>
+            <div className="relative w-full max-w-3xl overflow-hidden border border-white/10 bg-[linear-gradient(180deg,rgba(6,6,6,0.68)_0%,rgba(8,8,8,0.84)_100%)] px-6 py-10 text-center shadow-[0_32px_120px_rgba(0,0,0,0.58)] backdrop-blur-xl sm:px-10 sm:py-12">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(200,32,45,0.18)_0%,transparent_42%),radial-gradient(circle_at_50%_100%,rgba(249,115,22,0.14)_0%,transparent_32%)]" />
+              <div className="relative z-10">
+                <div className="mx-auto mb-6 h-px w-24 bg-[linear-gradient(90deg,transparent_0%,rgba(200,32,45,0.82)_50%,transparent_100%)]" />
+                <h1 className="font-heading text-4xl font-semibold tracking-[0.1em] text-white sm:text-6xl">
+                  Yaswanth Forge
+                </h1>
+                <p className="mx-auto mt-4 max-w-xl text-sm leading-7 tracking-[0.08em] text-white/72 uppercase sm:text-[0.95rem]">
+                  AI engineering portfolio
+                </p>
+                <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-white/62">
+                  Structured systems, strong visuals, and intelligent workflows built with discipline.
+                </p>
+                <div className="relative mt-10 inline-flex">
+                  <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(249,115,22,0.34)_0%,rgba(200,32,45,0.12)_55%,transparent_76%)] blur-2xl" />
+                  <motion.button
+                    type="button"
+                    onClick={handleEnter}
+                    whileTap={{ scale: 0.96 }}
+                    className="relative inline-flex items-center justify-center rounded-full border border-[var(--border-red)] bg-[linear-gradient(180deg,rgba(18,18,18,0.96)_0%,rgba(8,8,8,0.92)_100%)] px-8 py-3.5 text-sm font-semibold tracking-[0.18em] text-white uppercase shadow-[0_18px_48px_rgba(200,32,45,0.22)] transition hover:border-[rgba(249,115,22,0.5)] hover:text-white"
+                  >
+                    Enter the Forge
+                  </motion.button>
                 </div>
-
-                <motion.div
-                  className="relative hidden aspect-[3/5] overflow-hidden border border-white/10 bg-black/30 lg:block"
-                  initial={reducedMotion ? false : { opacity: 0, x: 24 }}
-                  animate={reducedMotion ? undefined : { opacity: 1, x: 0 }}
-                  transition={{ duration: 0.7, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <SafeImage
-                    src={assets.skillsForge}
-                    alt="AI forge atmosphere"
-                    fill
-                    quality={94}
-                    sizes="9rem"
-                    className="object-cover object-center opacity-90"
-                  />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.06)_0%,rgba(0,0,0,0.5)_100%)]" />
-                </motion.div>
               </div>
             </div>
           </motion.div>

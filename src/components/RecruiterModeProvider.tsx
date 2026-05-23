@@ -28,45 +28,26 @@ export function RecruiterModeProvider({ children }: RecruiterModeProviderProps) 
   const [recruiterMode, setRecruiterModeState] = useState(false);
 
   useEffect(() => {
-    let frame = 0;
-
     try {
-      const storedValue =
-        window.localStorage.getItem(RECRUITER_MODE_STORAGE_KEY) === "true";
-      frame = window.requestAnimationFrame(() => {
-        setRecruiterModeState(storedValue);
-      });
+      window.localStorage.removeItem(RECRUITER_MODE_STORAGE_KEY);
     } catch {
-      frame = window.requestAnimationFrame(() => {
-        setRecruiterModeState(false);
-      });
+      // Ignore storage cleanup failures and keep the default mode.
     }
 
-    return () => {
-      window.cancelAnimationFrame(frame);
-    };
+    setRecruiterModeState(false);
+    document.body.removeAttribute("data-recruiter-mode");
   }, []);
 
   useEffect(() => {
-    try {
-      window.localStorage.setItem(RECRUITER_MODE_STORAGE_KEY, String(recruiterMode));
-    } catch {
-      // Ignore storage failures and keep the in-memory toggle working.
-    }
-
-    if (recruiterMode) {
-      document.body.setAttribute("data-recruiter-mode", "true");
-    } else {
-      document.body.removeAttribute("data-recruiter-mode");
-    }
+    document.body.removeAttribute("data-recruiter-mode");
   }, [recruiterMode]);
 
-  const setRecruiterMode = useCallback((value: boolean) => {
-    setRecruiterModeState(value);
+  const setRecruiterMode = useCallback((_value: boolean) => {
+    setRecruiterModeState(false);
   }, []);
 
   const toggleRecruiterMode = useCallback(() => {
-    setRecruiterModeState((current) => !current);
+    setRecruiterModeState(false);
   }, []);
 
   const value = useMemo<RecruiterModeContextValue>(
