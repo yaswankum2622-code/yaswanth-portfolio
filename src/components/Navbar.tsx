@@ -6,7 +6,9 @@ import Link from "next/link";
 
 import { MobileMenu } from "@/components/MobileMenu";
 import { RecruiterModeToggle } from "@/components/RecruiterModeToggle";
+import { SafeImage } from "@/components/SafeImage";
 import { buttonVariants } from "@/components/ui/button";
+import { profile } from "@/data/profile";
 import type { NavigationLink } from "@/data/profile";
 import { scrollToPortfolioSection } from "@/lib/portfolio-navigation";
 import { cn } from "@/lib/utils";
@@ -17,7 +19,7 @@ type NavbarProps = {
   resumeHref: string;
 };
 
-export function Navbar({ links, resumeHref }: NavbarProps) {
+export function Navbar({ name, links, resumeHref }: NavbarProps) {
   const [isVisible, setIsVisible] = useState(true);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const lastScrollYRef = useRef(0);
@@ -98,9 +100,20 @@ export function Navbar({ links, resumeHref }: NavbarProps) {
             event.preventDefault();
             scrollToPortfolioSection("#hero");
           }}
-          className="text-sm font-semibold tracking-[0.22em] text-white uppercase"
+          className="flex items-center gap-3 text-sm font-semibold tracking-[0.22em] text-white uppercase"
         >
-          Yaswanth Forge
+          <span className="relative size-10 overflow-hidden border border-[rgba(200,32,45,0.3)] bg-black/40 shadow-[0_10px_24px_rgba(0,0,0,0.28)]">
+            <SafeImage
+              src={profile.portraitImage}
+              alt={`${name} portrait`}
+              fill
+              quality={96}
+              sizes="40px"
+              className="object-cover object-[50%_18%]"
+            />
+            <span className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.32)_100%)]" />
+          </span>
+          <span>Yaswanth Forge</span>
         </a>
 
         <nav className="hidden items-center gap-1 lg:flex">

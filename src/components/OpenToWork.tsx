@@ -29,7 +29,7 @@ export function OpenToWork({ chapter, resumeHref }: OpenToWorkProps) {
   return (
     <StorySection
       id="open-to-work"
-      chapterNumber={8}
+      chapterNumber={9}
       title={chapter.title}
       eyebrow={chapter.eyebrow}
       mood={chapter.mood}

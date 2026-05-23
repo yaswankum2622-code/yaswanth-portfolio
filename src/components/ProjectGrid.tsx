@@ -114,7 +114,7 @@ export function ProjectGrid({ chapter }: ProjectGridProps) {
     <>
       <StorySection
         id="projects"
-        chapterNumber={5}
+        chapterNumber={6}
         title={chapter.title}
         eyebrow={chapter.eyebrow}
         mood={chapter.mood}

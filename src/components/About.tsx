@@ -6,7 +6,6 @@ import { AnimatedTextReveal } from "@/components/AnimatedTextReveal";
 import { SafeImage } from "@/components/SafeImage";
 import { StorySection } from "@/components/StorySection";
 import { assets } from "@/data/assets";
-import { education } from "@/data/experience";
 import { profile } from "@/data/profile";
 import type { StoryChapter } from "@/data/storyChapters";
 
@@ -54,9 +53,10 @@ export function About({ chapter }: AboutProps) {
         >
           <div className="relative aspect-[4/5]">
             <SafeImage
-              src={assets.educationTemple || assets.portrait}
+              src={assets.educationTemple}
               alt="About section atmosphere"
               fill
+              quality={92}
               sizes="(min-width: 1024px) 24rem, 100vw"
               className="object-cover object-center"
             />
@@ -83,24 +83,6 @@ export function About({ chapter }: AboutProps) {
               </p>
             ))}
           </div>
-
-          <motion.div
-            className="border border-[rgba(245,158,11,0.22)] bg-black/32 p-5"
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
-            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.72, delay: prefersReducedMotion ? 0 : 0.18, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <p className="text-xs font-medium tracking-[0.2em] text-[var(--forge-orange)] uppercase">
-              Education
-            </p>
-            <div className="mt-3 space-y-2 text-white/82">
-              <p className="text-lg font-semibold">{education.degree}</p>
-              <p className="text-sm uppercase tracking-[0.14em] text-white/58">{education.school}</p>
-              <p className="text-sm text-white/72">GPA: 8.03/10.0</p>
-              <p className="text-sm text-white/72">{education.period}</p>
-            </div>
-          </motion.div>
 
           <motion.div
             className="flex flex-wrap gap-2 pt-1"

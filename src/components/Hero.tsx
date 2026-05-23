@@ -13,10 +13,8 @@ import {
 } from "lucide-react";
 import {
   motion,
-  useMotionValue,
   useReducedMotion,
   useScroll,
-  useSpring,
   useTransform,
 } from "motion/react";
 
@@ -95,33 +93,7 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
     offset: ["start start", "end start"],
   });
   const heroImageY = useTransform(scrollYProgress, [0, 1], [0, 84]);
-
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-  const smoothPointerX = useSpring(pointerX, { stiffness: 90, damping: 18, mass: 0.4 });
-  const smoothPointerY = useSpring(pointerY, { stiffness: 90, damping: 18, mass: 0.4 });
-  const branchX = useTransform(smoothPointerX, (value) => value * -0.45);
-  const branchY = useTransform(smoothPointerY, (value) => value * -0.35);
-
   const enablePointerParallax = canUseCustomCursor && !prefersReducedMotion && !recruiterMode;
-
-  const handlePointerMove: React.PointerEventHandler<HTMLDivElement> = (event) => {
-    if (!enablePointerParallax) {
-      return;
-    }
-
-    const rect = event.currentTarget.getBoundingClientRect();
-    const normalizedX = (event.clientX - rect.left) / rect.width - 0.5;
-    const normalizedY = (event.clientY - rect.top) / rect.height - 0.5;
-
-    pointerX.set(normalizedX * 18);
-    pointerY.set(normalizedY * 14);
-  };
-
-  const handlePointerLeave = () => {
-    pointerX.set(0);
-    pointerY.set(0);
-  };
 
   return (
     <StorySection
@@ -137,8 +109,6 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
     >
       <div
         ref={sectionRef}
-        onPointerMove={handlePointerMove}
-        onPointerLeave={handlePointerLeave}
         className="relative isolate grid gap-10 lg:grid-cols-[minmax(0,1.05fr)_18rem] lg:items-end"
       >
         <motion.div
@@ -146,38 +116,22 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
           className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
           style={prefersReducedMotion || recruiterMode ? undefined : { y: heroImageY }}
         >
-          <motion.div style={enablePointerParallax ? { x: smoothPointerX, y: smoothPointerY } : undefined}>
-            <SafeImage
-              src={assets.heroCover}
-              alt="Portfolio cover atmosphere"
-              fill
-              priority
-              sizes="100vw"
-              className={cn(
-                "object-cover object-[66%_48%]",
-                recruiterMode
-                  ? "opacity-12 sm:opacity-14 md:opacity-16 lg:opacity-18"
-                  : "opacity-18 sm:opacity-20 md:opacity-24 lg:opacity-30",
-              )}
-            />
-          </motion.div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_82%,rgba(249,115,22,0.28),transparent_30%),radial-gradient(circle_at_62%_22%,rgba(244,114,182,0.16),transparent_26%),linear-gradient(90deg,rgba(4,4,4,0.92)_0%,rgba(4,4,4,0.46)_44%,rgba(4,4,4,0.82)_100%)]" />
-        </motion.div>
-
-        <motion.div
-          className={cn(
-            "pointer-events-none absolute -right-4 top-[-4rem] hidden w-[24rem] lg:block xl:w-[28rem]",
-            recruiterMode ? "opacity-16" : "opacity-28",
-          )}
-          style={enablePointerParallax ? { x: branchX, y: branchY } : undefined}
-        >
           <SafeImage
-            src={assets.sakuraBranch}
-            alt="Cherry blossom branch accent"
-            width={920}
-            height={480}
-            className="h-auto w-full object-contain"
+            src={assets.scholarPath}
+            alt="Hero background atmosphere"
+            fill
+            priority
+            quality={95}
+            sizes="100vw"
+            className={cn(
+              "object-cover object-[62%_42%] transition-transform duration-500",
+              enablePointerParallax ? "scale-[1.02]" : "",
+              recruiterMode
+                ? "opacity-16 sm:opacity-[0.18] md:opacity-[0.2]"
+                : "opacity-26 sm:opacity-30 md:opacity-34 lg:opacity-38",
+            )}
           />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_78%,rgba(249,115,22,0.26),transparent_30%),radial-gradient(circle_at_62%_16%,rgba(251,191,36,0.10),transparent_24%),linear-gradient(90deg,rgba(4,4,4,0.92)_0%,rgba(4,4,4,0.52)_44%,rgba(4,4,4,0.82)_100%)]" />
         </motion.div>
 
         <div className="max-w-3xl space-y-7">
@@ -361,10 +315,10 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
 
         <motion.aside
           className={cn(
-            "hidden border p-5 text-sm lg:block",
+            "hidden lg:block",
             recruiterMode
-              ? "border-white/12 bg-black/42"
-              : "border-[rgba(255,255,255,0.12)] bg-black/22 backdrop-blur-sm",
+              ? "text-white/88"
+              : "text-white/82",
           )}
           initial={prefersReducedMotion ? false : { opacity: 0, x: 24 }}
           whileInView={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
@@ -375,28 +329,44 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
             ease: [0.22, 1, 0.36, 1],
           }}
         >
-          <p className="text-[0.72rem] font-medium tracking-[0.22em] text-white/54 uppercase">
-            Built for real systems
-          </p>
-          <div className="mt-5 space-y-3 text-white/76">
-            {["GenAI Workflows", "RAG Pipelines", "Agentic Systems", "Reliability Evaluation"].map(
-              (item, index) => (
-                <motion.div
-                  key={item}
-                  className="border-l border-[var(--samurai-red)]/36 pl-3"
-                  initial={prefersReducedMotion ? false : { opacity: 0, x: 12 }}
-                  whileInView={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.4 }}
-                  transition={{
-                    duration: 0.45,
-                    delay: prefersReducedMotion ? 0 : 0.7 + index * 0.05,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                >
-                  {item}
-                </motion.div>
-              ),
-            )}
+          <div className="relative overflow-hidden border border-[rgba(255,255,255,0.12)] bg-black/24 shadow-[0_24px_64px_rgba(0,0,0,0.24)] backdrop-blur-sm">
+            <div className="relative aspect-[4/5]">
+              <SafeImage
+                src={assets.contactRain}
+                alt="Night gate atmosphere"
+                fill
+                quality={94}
+                sizes="22rem"
+                className="object-cover object-center opacity-82"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.76)_100%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.12),transparent_22%)]" />
+              <div className="absolute inset-x-0 bottom-0 border-t border-white/10 bg-black/36 p-5">
+                <p className="text-[0.68rem] font-medium tracking-[0.22em] text-[var(--forge-orange)] uppercase">
+                  Built for real systems
+                </p>
+                <div className="mt-4 space-y-3 text-sm text-white/76">
+                  {["GenAI Workflows", "RAG Pipelines", "Agentic Systems", "Reliability Evaluation"].map(
+                    (item, index) => (
+                      <motion.div
+                        key={item}
+                        className="border-l border-[var(--samurai-red)]/36 pl-3"
+                        initial={prefersReducedMotion ? false : { opacity: 0, x: 12 }}
+                        whileInView={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.4 }}
+                        transition={{
+                          duration: 0.45,
+                          delay: prefersReducedMotion ? 0 : 0.7 + index * 0.05,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
+                      >
+                        {item}
+                      </motion.div>
+                    ),
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </motion.aside>
       </div>

@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "motion/react";
 
-import { SafeImage } from "@/components/SafeImage";
 import { StorySection } from "@/components/StorySection";
 import { assets } from "@/data/assets";
 import { skillGroups, type SkillGroup } from "@/data/skills";
@@ -45,12 +44,14 @@ export function Skills({ chapter }: SkillsProps) {
   return (
     <StorySection
       id="skills"
-      chapterNumber={3}
+      chapterNumber={4}
       title={chapter.title}
       eyebrow={chapter.eyebrow}
       mood={chapter.mood}
       accent={chapter.accent}
       backgroundType="forge-fire"
+      image={assets.skillsForge}
+      imagePosition="center-right"
     >
       <div className="relative">
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -58,16 +59,6 @@ export function Skills({ chapter }: SkillsProps) {
           <div className="absolute left-[32%] top-36 h-2 w-2 rounded-full bg-[var(--gold)]/30 blur-[1px] animate-pulse" />
           <div className="absolute right-[18%] top-16 h-1.5 w-1.5 rounded-full bg-[var(--samurai-red)]/34 blur-[1px] animate-pulse" />
           <div className="absolute right-[30%] bottom-8 h-2 w-2 rounded-full bg-[var(--forge-orange)]/28 blur-[1px] animate-pulse" />
-        </div>
-
-        <div className="pointer-events-none absolute -right-8 top-[-3rem] hidden w-56 opacity-16 lg:block">
-          <SafeImage
-            src={assets.katana}
-            alt="Katana accent"
-            width={480}
-            height={240}
-            className="h-auto w-full object-contain"
-          />
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">

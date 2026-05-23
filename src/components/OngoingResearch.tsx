@@ -27,12 +27,12 @@ const activeTech = ["Python", "FastAPI", "LangGraph", "PostgreSQL", "Streamlit",
 export function OngoingResearch({ chapter }: OngoingResearchProps) {
   const prefersReducedMotion = useReducedMotion();
   const bankingProject = projects.find((project) => project.id === "bankingOS");
-  const imageSource = bankingProject?.image || assets.heroCover || assets.fallbackFog;
+  const imageSource = bankingProject?.image || assets.activeForge || assets.fallbackFog;
 
   return (
     <StorySection
       id="active-forge"
-      chapterNumber={6}
+      chapterNumber={7}
       title={chapter.title}
       eyebrow={chapter.eyebrow}
       mood={chapter.mood}
@@ -52,6 +52,7 @@ export function OngoingResearch({ chapter }: OngoingResearchProps) {
               src={imageSource}
               alt="Banking OS atmosphere"
               fill
+              quality={94}
               sizes="(min-width: 1024px) 26rem, 100vw"
               className="object-cover object-center"
             />
@@ -86,9 +87,10 @@ export function OngoingResearch({ chapter }: OngoingResearchProps) {
               {bankingProject?.title ?? "Banking OS"}
             </h3>
             <p className="text-base leading-8 text-white/78">
-              Banking OS is an ongoing intelligent banking infrastructure project integrating
-              GenAI agents, policy-governed workflows, compliance automation, fraud detection, and
-              audit-ready financial operations.
+              Banking OS is an ongoing trusted workflow platform for regulated finance. It is being
+              designed around policy-governed agent execution, deterministic control checks, human
+              review gates, evidence capture, and audit-ready operations across sensitive banking
+              processes.
             </p>
           </div>
 

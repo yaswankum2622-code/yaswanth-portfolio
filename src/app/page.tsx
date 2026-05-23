@@ -1,6 +1,7 @@
 import { About } from "@/components/About";
 import { Certifications } from "@/components/Certifications";
 import { Contact } from "@/components/Contact";
+import { Education } from "@/components/Education";
 import { Experience } from "@/components/Experience";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
@@ -17,6 +18,7 @@ import { storyChapters } from "@/data/storyChapters";
 
 const heroChapter = storyChapters.find((chapter) => chapter.id === "cherry-blossom-dawn");
 const aboutChapter = storyChapters.find((chapter) => chapter.id === "about-me");
+const educationChapter = storyChapters.find((chapter) => chapter.id === "education-foundation");
 const skillsChapter = storyChapters.find((chapter) => chapter.id === "skills-forge");
 const experienceChapter = storyChapters.find((chapter) => chapter.id === "experience-timeline");
 const projectsChapter = storyChapters.find((chapter) => chapter.id === "project-arsenal");
@@ -36,6 +38,8 @@ export default function Home() {
         {heroChapter ? <Hero chapter={heroChapter} resumeHref={resumePageHref} /> : null}
         <SectionTransition variant="cherry mist" />
         {aboutChapter ? <About chapter={aboutChapter} /> : null}
+        <SectionTransition variant="light reveal" />
+        {educationChapter ? <Education chapter={educationChapter} /> : null}
         <SectionTransition variant="forge ignition" />
         {skillsChapter ? <Skills chapter={skillsChapter} /> : null}
         <SectionTransition variant="red moon fall" />

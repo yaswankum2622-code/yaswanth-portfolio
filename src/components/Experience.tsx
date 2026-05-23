@@ -6,20 +6,11 @@ import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 
 import { SafeImage } from "@/components/SafeImage";
 import { StorySection } from "@/components/StorySection";
-import { experience, education } from "@/data/experience";
+import { experience } from "@/data/experience";
 import type { StoryChapter } from "@/data/storyChapters";
 
 type ExperienceProps = {
   chapter: StoryChapter;
-};
-
-type TimelineItem = {
-  id: string;
-  role: string;
-  company: string;
-  period: string;
-  location: string;
-  bullets: string[];
 };
 
 export function Experience({ chapter }: ExperienceProps) {
@@ -31,29 +22,10 @@ export function Experience({ chapter }: ExperienceProps) {
   });
   const imageY = useTransform(scrollYProgress, [0, 1], [12, -28]);
 
-  const timelineItems: TimelineItem[] = [
-    {
-      id: experience[0].id,
-      role: experience[0].role,
-      company: experience[0].company,
-      period: experience[0].period,
-      location: experience[0].location,
-      bullets: experience[0].achievements,
-    },
-    {
-      id: "vit-chennai",
-      role: "Integrated M.Tech - Computer Science and Engineering, Business Analytics",
-      company: education.school,
-      period: education.period,
-      location: "Chennai, India",
-      bullets: education.details,
-    },
-  ];
-
   return (
     <StorySection
       id="experience"
-      chapterNumber={4}
+      chapterNumber={5}
       title={chapter.title}
       eyebrow={chapter.eyebrow}
       mood={chapter.mood}
@@ -75,7 +47,7 @@ export function Experience({ chapter }: ExperienceProps) {
           />
 
           <div className="space-y-7">
-            {timelineItems.map((item, index) => (
+            {experience.map((item, index) => (
               <motion.article
                 key={item.id}
                 className="relative border border-[rgba(200,32,45,0.22)] bg-black/30 p-5 shadow-[0_20px_44px_rgba(0,0,0,0.2)]"
@@ -112,7 +84,7 @@ export function Experience({ chapter }: ExperienceProps) {
                 </div>
 
                 <ul className="mt-5 grid gap-3 text-sm leading-7 text-white/76">
-                  {item.bullets.map((bullet, bulletIndex) => (
+                  {item.achievements.map((bullet, bulletIndex) => (
                     <motion.li
                       key={`${item.id}-${bulletIndex}`}
                       className="border-l border-white/8 pl-4"
@@ -147,6 +119,7 @@ export function Experience({ chapter }: ExperienceProps) {
               src={experience[0].image}
               alt="Experience timeline atmosphere"
               fill
+              quality={92}
               sizes="22rem"
               className="object-cover object-center opacity-78"
             />

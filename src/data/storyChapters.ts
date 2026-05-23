@@ -44,6 +44,17 @@ export const storyChapters: StoryChapter[] = [
     transitionStyle: "Warm mist reveal",
   },
   {
+    id: "education-foundation",
+    navLabel: "Education",
+    title: "Foundation of Study",
+    eyebrow: "Education",
+    mood: "Research depth, engineering discipline, and analytics perspective built over long-form study.",
+    accent: "Amber, parchment, torchlight",
+    description:
+      "Education stands as its own chapter, showing the academic foundation behind the engineering, analytics, and systems work.",
+    transitionStyle: "Lantern reveal",
+  },
+  {
     id: "skills-forge",
     navLabel: "Skills",
     title: "Forging the Blade",

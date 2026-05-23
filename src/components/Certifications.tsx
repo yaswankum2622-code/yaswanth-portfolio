@@ -17,7 +17,7 @@ export function Certifications({ chapter }: CertificationsProps) {
   return (
     <StorySection
       id="certifications"
-      chapterNumber={7}
+      chapterNumber={8}
       title={chapter.title}
       eyebrow={chapter.eyebrow}
       mood={chapter.mood}

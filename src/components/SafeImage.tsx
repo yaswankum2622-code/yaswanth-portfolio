@@ -14,6 +14,7 @@ type SafeImageProps = {
   height?: number;
   priority?: boolean;
   sizes?: string;
+  quality?: number;
 };
 
 function ImageFallback({
@@ -50,6 +51,7 @@ export function SafeImage({
   height,
   priority,
   sizes,
+  quality = 88,
 }: SafeImageProps) {
   const [hasFailed, setHasFailed] = useState(!src);
 
@@ -73,6 +75,7 @@ export function SafeImage({
         fill
         priority={priority}
         sizes={sizes ?? "100vw"}
+        quality={quality}
         className={className}
         onError={() => setHasFailed(true)}
       />
@@ -86,6 +89,7 @@ export function SafeImage({
       width={width ?? 1200}
       height={height ?? 900}
       priority={priority}
+      quality={quality}
       className={className}
       onError={() => setHasFailed(true)}
     />

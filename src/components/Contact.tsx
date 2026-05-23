@@ -50,7 +50,7 @@ export function Contact({ chapter }: ContactProps) {
   return (
     <StorySection
       id="contact"
-      chapterNumber={9}
+      chapterNumber={10}
       title={chapter.title}
       eyebrow={chapter.eyebrow}
       mood={chapter.mood}

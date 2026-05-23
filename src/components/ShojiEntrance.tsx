@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 
 import { AnimatePresence, motion } from "motion/react";
 
+import { SafeImage } from "@/components/SafeImage";
+import { assets } from "@/data/assets";
+
 import { useAnimationProvider } from "./AnimationProvider";
 import { useSlashTransition } from "./SlashTransition";
 
@@ -129,24 +132,87 @@ export function ShojiEntrance() {
             }}
             transition={{ duration: reducedMotion ? 0.18 : 0.28, ease: "easeOut" }}
           >
-            <div className="w-full max-w-2xl rounded-[2rem] border border-white/10 bg-black/42 px-6 py-10 text-center shadow-[0_32px_120px_rgba(0,0,0,0.58)] backdrop-blur-xl sm:px-10">
-              <div className="mx-auto mb-6 h-px w-20 bg-[linear-gradient(90deg,transparent_0%,rgba(200,32,45,0.82)_50%,transparent_100%)]" />
-              <h1 className="font-heading text-4xl font-semibold tracking-[0.1em] text-white sm:text-6xl">
-                Yaswanth Forge
-              </h1>
-              <p className="mx-auto mt-4 max-w-xl text-sm leading-7 tracking-[0.08em] text-white/68 uppercase sm:text-[0.95rem]">
-                AI engineering portfolio
-              </p>
-              <div className="relative mt-10 inline-flex">
-                <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(249,115,22,0.28)_0%,rgba(200,32,45,0.08)_55%,transparent_76%)] blur-2xl" />
-                <motion.button
-                  type="button"
-                  onClick={handleEnter}
-                  whileTap={{ scale: 0.96 }}
-                  className="relative inline-flex items-center justify-center rounded-full border border-[var(--border-red)] bg-[linear-gradient(180deg,rgba(18,18,18,0.96)_0%,rgba(8,8,8,0.92)_100%)] px-7 py-3 text-sm font-semibold tracking-[0.18em] text-white uppercase shadow-[0_18px_48px_rgba(200,32,45,0.16)] transition hover:border-[rgba(249,115,22,0.5)] hover:text-white"
+            <div className="relative w-full max-w-4xl overflow-hidden border border-white/10 bg-[linear-gradient(180deg,rgba(5,5,5,0.78)_0%,rgba(10,8,8,0.92)_100%)] px-6 py-8 text-center shadow-[0_32px_120px_rgba(0,0,0,0.58)] backdrop-blur-xl sm:px-8 sm:py-10">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(200,32,45,0.16)_0%,transparent_38%),radial-gradient(circle_at_50%_100%,rgba(249,115,22,0.12)_0%,transparent_32%)]" />
+              <div className="grid gap-6 lg:grid-cols-[9rem_minmax(0,1fr)_9rem] lg:items-center">
+                <motion.div
+                  className="relative hidden aspect-[3/5] overflow-hidden border border-white/10 bg-black/30 lg:block"
+                  initial={reducedMotion ? false : { opacity: 0, x: -24 }}
+                  animate={reducedMotion ? undefined : { opacity: 1, x: 0 }}
+                  transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  Enter the Forge
-                </motion.button>
+                  <SafeImage
+                    src={assets.contactRain}
+                    alt="Entrance gate atmosphere"
+                    fill
+                    quality={94}
+                    sizes="9rem"
+                    className="object-cover object-center opacity-88"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.10)_0%,rgba(0,0,0,0.58)_100%)]" />
+                </motion.div>
+
+                <div className="relative z-10">
+                  <div className="mx-auto mb-6 h-px w-20 bg-[linear-gradient(90deg,transparent_0%,rgba(200,32,45,0.82)_50%,transparent_100%)]" />
+                  <h1 className="font-heading text-4xl font-semibold tracking-[0.1em] text-white sm:text-6xl">
+                    Yaswanth Forge
+                  </h1>
+                  <p className="mx-auto mt-4 max-w-xl text-sm leading-7 tracking-[0.08em] text-white/68 uppercase sm:text-[0.95rem]">
+                    AI engineering portfolio
+                  </p>
+                  <div className="mx-auto mt-6 flex max-w-xs items-center justify-center gap-3 lg:hidden">
+                    <div className="relative aspect-[5/4] flex-1 overflow-hidden border border-white/10">
+                      <SafeImage
+                        src={assets.contactRain}
+                        alt="Entrance gate atmosphere"
+                        fill
+                        quality={92}
+                        sizes="160px"
+                        className="object-cover object-center"
+                      />
+                      <div className="absolute inset-0 bg-black/28" />
+                    </div>
+                    <div className="relative aspect-[5/4] flex-1 overflow-hidden border border-white/10">
+                      <SafeImage
+                        src={assets.skillsForge}
+                        alt="AI forge atmosphere"
+                        fill
+                        quality={92}
+                        sizes="160px"
+                        className="object-cover object-center"
+                      />
+                      <div className="absolute inset-0 bg-black/28" />
+                    </div>
+                  </div>
+                  <div className="relative mt-10 inline-flex">
+                    <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(249,115,22,0.34)_0%,rgba(200,32,45,0.12)_55%,transparent_76%)] blur-2xl" />
+                    <motion.button
+                      type="button"
+                      onClick={handleEnter}
+                      whileTap={{ scale: 0.96 }}
+                      className="relative inline-flex items-center justify-center rounded-full border border-[var(--border-red)] bg-[linear-gradient(180deg,rgba(18,18,18,0.96)_0%,rgba(8,8,8,0.92)_100%)] px-8 py-3.5 text-sm font-semibold tracking-[0.18em] text-white uppercase shadow-[0_18px_48px_rgba(200,32,45,0.22)] transition hover:border-[rgba(249,115,22,0.5)] hover:text-white"
+                    >
+                      Enter the Forge
+                    </motion.button>
+                  </div>
+                </div>
+
+                <motion.div
+                  className="relative hidden aspect-[3/5] overflow-hidden border border-white/10 bg-black/30 lg:block"
+                  initial={reducedMotion ? false : { opacity: 0, x: 24 }}
+                  animate={reducedMotion ? undefined : { opacity: 1, x: 0 }}
+                  transition={{ duration: 0.7, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <SafeImage
+                    src={assets.skillsForge}
+                    alt="AI forge atmosphere"
+                    fill
+                    quality={94}
+                    sizes="9rem"
+                    className="object-cover object-center opacity-90"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.06)_0%,rgba(0,0,0,0.5)_100%)]" />
+                </motion.div>
               </div>
             </div>
           </motion.div>

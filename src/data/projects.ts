@@ -168,11 +168,11 @@ export const projects: ProjectCard[] = [
     image: assets.bankingOS,
     accent: "active-forge",
     oneLineDescription:
-      "Policy-governed workflow control layer for KYC clearance and insurance claims across trusted agentic finance workflows.",
+      "Trusted agentic workflow platform for regulated finance, built around policy-governed execution, review gates, evidence capture, and audit-ready controls.",
     shortDescription:
-      "An ongoing operating system concept focused on permissions, escalation, evidence, and auditability for regulated workflows.",
-    techStack: ["Policy Graph", "Agent Orchestration", "Human Verification", "Evidence Trails"],
-    topMetrics: ["Architecture in progress", "Core systems in progress"],
+      "An ongoing banking workflow operating layer focused on deterministic controls, human verification, evidence packets, and append-only auditability.",
+    techStack: ["Python", "FastAPI", "LangGraph", "PostgreSQL", "Streamlit", "GenAI"],
+    topMetrics: ["Architecture in progress", "Workflow controls in progress"],
     github: null,
     live: { label: "In progress", href: null },
     featured: false,
