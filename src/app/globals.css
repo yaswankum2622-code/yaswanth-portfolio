@@ -1,0 +1,186 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-cinzel);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --ink: #040404;
+  --ink-soft: #0f0b0a;
+  --mist: #d9d1ca;
+  --samurai-red: #c8202d;
+  --red-dark: #5f0d14;
+  --forge-orange: #f97316;
+  --cherry: #f67aa6;
+  --gold: #eab308;
+  --rain-blue: #60a5fa;
+  --green-life: #4ade80;
+  --border-red: rgba(200, 32, 45, 0.26);
+  --text-muted: rgba(245, 239, 229, 0.66);
+  --background: var(--ink);
+  --foreground: #f7f1e7;
+  --card: rgba(10, 10, 10, 0.72);
+  --card-foreground: #f7f1e7;
+  --popover: rgba(10, 10, 10, 0.94);
+  --popover-foreground: #f7f1e7;
+  --primary: var(--samurai-red);
+  --primary-foreground: #fff7ed;
+  --secondary: rgba(255, 255, 255, 0.08);
+  --secondary-foreground: #fff7ed;
+  --muted: rgba(255, 255, 255, 0.06);
+  --muted-foreground: var(--text-muted);
+  --accent: rgba(249, 115, 22, 0.14);
+  --accent-foreground: #fff7ed;
+  --destructive: #ef4444;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: rgba(249, 115, 22, 0.55);
+  --chart-1: var(--samurai-red);
+  --chart-2: var(--forge-orange);
+  --chart-3: var(--gold);
+  --chart-4: var(--rain-blue);
+  --chart-5: var(--green-life);
+  --radius: 0.625rem;
+  --sidebar: rgba(10, 10, 10, 0.88);
+  --sidebar-foreground: #f7f1e7;
+  --sidebar-primary: var(--samurai-red);
+  --sidebar-primary-foreground: #fff7ed;
+  --sidebar-accent: rgba(255, 255, 255, 0.08);
+  --sidebar-accent-foreground: #fff7ed;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: rgba(249, 115, 22, 0.45);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    overflow-x: clip;
+    background: var(--ink);
+  }
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: clip;
+    background:
+      radial-gradient(circle at top, rgba(200, 32, 45, 0.08), transparent 24%),
+      linear-gradient(180deg, var(--ink) 0%, var(--ink-soft) 100%);
+  }
+  body[data-recruiter-mode="true"] {
+    --text-muted: rgba(247, 241, 231, 0.78);
+    --border: rgba(255, 255, 255, 0.12);
+    --input: rgba(255, 255, 255, 0.14);
+    background:
+      radial-gradient(circle at top, rgba(200, 32, 45, 0.04), transparent 18%),
+      linear-gradient(180deg, #050505 0%, #0d0d0d 100%);
+  }
+  body[data-custom-cursor="true"],
+  body[data-custom-cursor="true"] a,
+  body[data-custom-cursor="true"] button,
+  body[data-custom-cursor="true"] [role="button"],
+  body[data-custom-cursor="true"] [data-cursor="hover"],
+  body[data-custom-cursor="true"] [data-cursor="project-card"],
+  body[data-custom-cursor="true"] [data-slash-trigger] {
+    cursor: none !important;
+  }
+  ::selection {
+    background: rgba(249, 115, 22, 0.42);
+    color: #fff7ed;
+  }
+  :focus-visible {
+    outline: 2px solid rgba(249, 115, 22, 0.85);
+    outline-offset: 3px;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.04);
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(200, 32, 45, 0.9), rgba(249, 115, 22, 0.72));
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(200, 32, 45, 1), rgba(249, 115, 22, 0.9));
+  }
+  body[data-recruiter-mode="true"] .noise-overlay {
+    opacity: 0.14 !important;
+  }
+}
+
+@layer utilities {
+  .noise-overlay {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0.6px, transparent 0.9px);
+    background-size: 150px 150px, 150px 150px, 4px 4px;
+    background-position: center center, center center, center center;
+    mix-blend-mode: soft-light;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
