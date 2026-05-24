@@ -22,9 +22,26 @@ type HeroProps = {
   resumeHref: string;
 };
 
-const roleLine = "AI Engineer · GenAI · RAG · Agentic AI · ML";
-const heroBio =
-  "Building intelligent systems with Python, LangChain, LangGraph, FastAPI, Streamlit, and production-grade AI workflows. Focused on GenAI, RAG, AI agents, analytics systems, and AI safety.";
+const roleLine = "Software Engineer";
+const heroNarrative = [
+  "I am a Software Engineer shaping intelligent products where rigorous engineering meets the possibilities of modern AI.",
+  "Leveraging Generative AI, LLMs, RAG, and agentic systems, I build experiences that feel seamless, dependable, and thoughtfully crafted.",
+  "My work is guided by precision, clarity, and a belief that advanced technology should create lasting value in the real world.",
+] as const;
+const heroNotes = [
+  {
+    label: "Foundation",
+    value: "Software Engineering",
+  },
+  {
+    label: "Leverage",
+    value: "GenAI, LLMs, RAG, Agentic Systems",
+  },
+  {
+    label: "Standard",
+    value: "Elegant, reliable, real-world execution",
+  },
+] as const;
 
 const ctaButtons = [
   {
@@ -94,7 +111,7 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
       <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent via-black/15 to-[var(--ink)]" />
 
       <div className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-center px-6 py-24 sm:px-8 lg:px-10">
-        <div className="max-w-4xl space-y-7">
+        <div className="max-w-5xl space-y-7">
           <motion.p
             className="text-xs font-medium tracking-[0.26em] text-white/72 uppercase"
             initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
@@ -128,27 +145,96 @@ export function Hero({ chapter, resumeHref }: HeroProps) {
             </span>
           </h1>
 
-          <motion.p
-            className="max-w-3xl text-sm font-medium tracking-[0.18em] text-[var(--mist)] uppercase sm:text-base"
+          <motion.div
+            className="inline-flex w-fit items-center gap-4 border border-white/14 bg-black/24 px-4 py-3 backdrop-blur-sm"
             initial={prefersReducedMotion ? false : { opacity: 0, y: 16 }}
             whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.75 }}
             transition={{ duration: 0.68, delay: prefersReducedMotion ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
-            {roleLine}
-          </motion.p>
+            <span className="h-px w-10 bg-[linear-gradient(90deg,rgba(246,122,166,0),rgba(246,122,166,0.95),rgba(249,115,22,0.95))]" />
+            <span className="text-sm font-medium tracking-[0.22em] text-[var(--mist)] uppercase sm:text-base">
+              {roleLine}
+            </span>
+            <span className="h-px w-10 bg-[linear-gradient(90deg,rgba(249,115,22,0.95),rgba(249,115,22,0.35),rgba(249,115,22,0))]" />
+          </motion.div>
 
           <GlowDivider accent={chapter.accent} className="max-w-[220px]" />
 
-          <motion.p
-            className="max-w-3xl text-base leading-8 text-white/82 sm:text-lg"
+          <motion.div
+            className="relative max-w-3xl overflow-hidden border border-white/14 bg-[linear-gradient(145deg,rgba(9,7,7,0.8)_0%,rgba(9,7,7,0.4)_100%)] px-6 py-6 shadow-[0_24px_70px_rgba(0,0,0,0.26)] backdrop-blur-md sm:px-8 sm:py-8"
             initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
             whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.7 }}
             transition={{ duration: 0.74, delay: prefersReducedMotion ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}
           >
-            {heroBio}
-          </motion.p>
+            <span
+              aria-hidden
+              className="absolute left-3 top-3 h-8 w-8 border-l border-t border-[rgba(246,122,166,0.65)]"
+            />
+            <span
+              aria-hidden
+              className="absolute right-3 top-3 h-8 w-8 border-r border-t border-[rgba(249,115,22,0.65)]"
+            />
+            <span
+              aria-hidden
+              className="absolute bottom-3 left-3 h-8 w-8 border-b border-l border-[rgba(246,122,166,0.65)]"
+            />
+            <span
+              aria-hidden
+              className="absolute bottom-3 right-3 h-8 w-8 border-b border-r border-[rgba(249,115,22,0.65)]"
+            />
+
+            <div className="relative space-y-5">
+              <p className="text-[0.7rem] font-medium tracking-[0.3em] text-white/56 uppercase">
+                Crafted introduction
+              </p>
+              <div className="space-y-4">
+                {heroNarrative.map((line, index) => (
+                  <p
+                    key={line}
+                    className={cn(
+                      "max-w-2xl text-base leading-8 sm:text-lg",
+                      index === 0 ? "text-white/92" : "text-white/78",
+                    )}
+                  >
+                    {line}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="grid max-w-4xl gap-3 sm:grid-cols-3"
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
+            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.72, delay: prefersReducedMotion ? 0 : 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {heroNotes.map((note, index) => (
+              <motion.div
+                key={note.label}
+                className="relative overflow-hidden border border-white/12 bg-black/26 px-5 py-4 backdrop-blur-sm"
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 14 }}
+                whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+                whileHover={prefersReducedMotion ? undefined : { y: -3 }}
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 0.48, delay: prefersReducedMotion ? 0 : 0.56 + index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <span
+                  aria-hidden
+                  className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,rgba(246,122,166,0),rgba(246,122,166,0.85),rgba(249,115,22,0.85),rgba(249,115,22,0))]"
+                />
+                <p className="text-[0.68rem] font-medium tracking-[0.28em] text-white/48 uppercase">
+                  {note.label}
+                </p>
+                <p className="mt-3 text-sm leading-6 text-white/84 sm:text-[0.95rem]">
+                  {note.value}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
 
           <motion.div
             className="flex flex-wrap gap-3 pt-2"
